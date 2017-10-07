@@ -1,0 +1,12 @@
+-Front End:
+  -Buttons mit namen
+  -login/sign up buttons
+  -website design
+
+-Back End:
+  -requests api DONE
+  -login
+  -user
+  -zufälliges Lied ausuchen
+  -ssh
+  -dataBase
