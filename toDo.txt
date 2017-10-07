@@ -11,3 +11,5 @@
   -zufälliges Lied ausuchen
   -ssh
   -dataBase DONE
+
+trello board => https://trello.com/b/CobT3UN9/spotify-ding
