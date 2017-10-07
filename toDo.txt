@@ -6,8 +6,8 @@
 -Back End:
   -requests api DONE
   -login
-  -sign up FELIX
+  -sign up DONE
   -user
   -zufälliges Lied ausuchen
   -ssh
-  -dataBase
+  -dataBase DONE
