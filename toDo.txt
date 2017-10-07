@@ -6,6 +6,7 @@
 -Back End:
   -requests api DONE
   -login
+  -sign up FELIX
   -user
   -zufälliges Lied ausuchen
   -ssh
