@@ -1,7 +1,6 @@
 function sleep(ms) {
   return new Promise(resolve => setTimeout(resolve, ms));
 }
-
 function add(id){
   url = "https://api.spotify.com/v1/tracks/"+id;
   $.getJSON({
