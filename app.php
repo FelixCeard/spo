@@ -18,5 +18,6 @@ if(isset($_SESSION["token"])){
   </head>
   <body>
 <h1>App</h1>
+<a href="logout.php">logout</a>
   </body>
 </html>
