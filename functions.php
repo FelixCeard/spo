@@ -1,6 +1,47 @@
 <?php
+$db = ConnectToDatabase();
+if($db == false){
+  exit(
+    "false"
+  );
+}
 
 session_start();
+
+
+function validToken($db,$token){
+  $sql = "SELECT * FROM token";
+  $query = $db->query($sql);
+
+  while($data = $query->fetch()){
+    if($data["token"] == $token){
+      return true;
+    }
+  }
+  return false;
+}
+
+
+//tokens for access to the app
+function getToken(){
+    if (function_exists('com_create_guid')){
+        return com_create_guid();
+    }else{
+        mt_srand((double)microtime()*10000);//optional for php 4.2.0 and up.
+        $charid = strtoupper(md5(uniqid(rand(), true)));
+        $hyphen = chr(45);// "-"
+        $uuid = chr(123)// "{"
+            .substr($charid, 0, 8).$hyphen
+            .substr($charid, 8, 4).$hyphen
+            .substr($charid,12, 4).$hyphen
+            .substr($charid,16, 4).$hyphen
+            .substr($charid,20,12)
+            .chr(125);// "}"
+        return $uuid;
+    }
+}
+
+
 //function for getting a protected value from an object
 function getProtectedValue($obj,$name) {
   $array = (array)$obj;
@@ -28,24 +69,21 @@ function ConnectToDatabase($table="spotifyJAJAJA",$username = "root",$password =
       $db = new PDO("mysql:host=localhost;dbname=$table;charset=utf8", $username, $password);
 
 
-      // create new table
+      // create new user table
       $table= "user";
       $columns = "Username VARCHAR( 20 ) NOT NULL , Password VARCHAR( 255 ) NOT NULL , Mail VARCHAR( 250 ) NOT NULL" ;
-      $createTable = $db->exec("CREATE TABLE spotifyJAJAJA.$table ($columns)");
+      $createTable = $db->exec("CREATE TABLE IF NOT EXISTS spotifyJAJAJA.$table ($columns)");
       if(!$createTable){
         return false;
       }
+      $table= "token";
+      $columns = "token VARCHAR( 50 ) NOT NULL , used BOOLEAN(  )," ;
+      $createTable = $db->exec("CREATE TABLE IF NOT EXISTS tokens.$table ($columns)");
     }
   }
   return $db;
 }
 
-$db = ConnectToDatabase();
-if($db == false){
-  exit(
-    "false"
-  );
-}
 
 //signup
 function signup($db,$username,$password,$mail)

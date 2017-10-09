@@ -25,7 +25,20 @@ if(isset($_POST["type"])){ // check if type exists
         echo "<br>signup<br>";
         if(isset($_SESSION["logged_in"])){
           if($_SESSION["logged_in"]){
-            header("Location: app.php");
+
+
+            $token = getToken();
+            $newu = $db->prepare("INSERT INTO token (token,used) VALUES(:token,false)");// insert into the database the data
+
+            $array = array("token" => $token);// insert into the database the data
+
+            $executed = $newu->execute($array);
+            if($executed){
+              $_SESSION["token"] = $token;
+              header("Location: app.php");
+            }else {
+              exit("internal error");
+            }
           }
         }
       }else {
@@ -46,11 +59,23 @@ if(isset($_POST["type"])){ // check if type exists
 
         $login = login($db,$_POST["username"],$_POST["password"]);
 
-        if($login){
-          header("Location: app.php");
-        }else {
-          exit("wrong username or password, <a href=\"index.php\">try again please </a>");
-        }
+
+
+        $newi = $db->prepare("INSERT INTO token VALUES (:token,:used)");// insert into the database the data
+        $token = getToken();
+        $array = array("token" => $token,"used" => false);// insert into the database the data
+
+          if (!$newi->execute($array)) {
+            exit("internal error");
+          }else {
+            $_SESSION["token"] = $token;
+          }
+
+          if($login){
+            header("Location: app.php");
+          }else {
+            exit("wrong username or password, <a href=\"index.php\">try again please </a>");
+          }
 
 
 
