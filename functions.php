@@ -59,7 +59,7 @@ function signup($db,$username,$password,$mail)
 
     // search for same username
     if($dbuser == $username){
-      exit("username taken -> <a href=\"#\">take anoter<a>");
+      exit("username taken -> <a href=\"index.php\">take anoter<a>");
     }
 
   }
@@ -99,8 +99,24 @@ function login($db,$username,$password){
   }
   return false;
 }
+function delBad($string)
+{
+  $out = "";
+  for ($i=0; $i < strlen($string); $i++) {
 
+    $letter = ord($string[$i]);
 
+    if($letter >= 48 && $letter <=57 ){
+        $out .= $string[$i];
+    }elseif ($letter >= 64 && $letter <= 90) {
+        $out .= $string[$i];
+    }elseif ($letter >= 97 && $letter <= 122) {
+        $out .= $string[$i];
+    }
+
+  }
+  return $out;
+}
 
 // login( database , username , password );
 // signup( databse , username , password, email );
