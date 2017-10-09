@@ -14,6 +14,13 @@
       <input type="hidden" name="type" value="signup">
       <input type="submit" value="submit">
     </form>
+    <h2>Login</h2>
+    <form class="form" action="auth.php" method="post">
+      <input type="text" name="username" placeholder="username">
+      <input type="password" name="password" placeholder="password">
+      <input type="hidden" name="type" value="login">
+      <input type="submit" value="submit">
+    </form>
 
 
   </body>

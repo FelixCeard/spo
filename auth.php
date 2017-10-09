@@ -28,11 +28,33 @@ if(isset($_POST["type"])){ // check if type exists
             header("Location: app.php");
           }
         }
+      }else {
+        echo "unvalid e-mail, <a href=\"index.php\">take another please</a>";
       }
 
 
 
 
+    }
+
+  }elseif($_POST["type"] == "login") {
+    if(isset($_POST["username"]) && isset($_POST["password"])){
+      if(isset($_POST["mail"])){
+        header("Location: error.php?error=unvalid_post");
+      }else {
+
+
+        $login = login($db,$_POST["username"],$_POST["password"]);
+
+        if($login){
+          header("Location: app.php");
+        }else {
+          exit("wrong username or password, <a href=\"index.php\">try again please </a>");
+        }
+
+
+
+      }
     }
 
   }
